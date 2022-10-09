@@ -16,10 +16,22 @@ public:
 
     inline void sendOne()
     {
+        _hal->rfLow();
+        _hal->shortWait();
+        _hal->rfHigh();
+        _hal->longWait();
+        _hal->rfLow();
+        _hal->shortWait();
     }
 
     inline void sendZero()
     {
+        _hal->rfHigh();
+        _hal->shortWait();
+        _hal->rfLow();
+        _hal->longWait();
+        _hal->rfHigh();
+        _hal->shortWait();
     }
 
 private:
