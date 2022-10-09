@@ -18,6 +18,9 @@ One choice for Arduino here is clear: no pain for communication with the embedde
 
 *Note*: Later, real target hardware will not have enough flash to load Unity and/or string messages and it will become more fun to test.
 
-# Begin library implementation
-Based on an available specification and various code found on GitHub, begin the implementation of the library.
-* Manchester code using radio state coding (H, L) (step3)
+# Library implementation
+
+Based on an [available specification](../doc/OregonScientific-RF-Protocols.pdf) and various code found on GitHub, begin the implementation of the library.
+
+## 1. Bit encoding 
+Bit encoding is the smallest information to be send. To allow testing on native and cross environment, a system HAL shall be implemented. Tests and implementation will be written for native environment (step3) then embedded (step4).
