@@ -33,6 +33,11 @@ public:
         _hal->rfHigh();
         _hal->shortWait();
     }
+   
+    void sendData(const unsigned char* data, uint8_t size)
+    {
+        
+    }
 
 private:
     Hal *_hal;
