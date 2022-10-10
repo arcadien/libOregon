@@ -22,5 +22,8 @@ One choice for Arduino here is clear: no pain for communication with the embedde
 
 Based on an [available specification](../doc/OregonScientific-RF-Protocols.pdf) and various code found on GitHub, begin the implementation of the library.
 
-## 1. Bit encoding 
+## 1. Bit encoding  (step3 and step4)
 Bit encoding is the smallest information to be send. To allow testing on native and cross environment, a system HAL shall be implemented. Tests and implementation will be written for native environment (step3) then embedded (step4).
+
+## 2. Byte encoding (step 5)
+Bytes are sent MSB first. It means byte `0b01110001` shall be sent as `11101000`.

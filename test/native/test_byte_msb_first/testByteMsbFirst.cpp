@@ -21,19 +21,19 @@ void tearDown(void)
 
 void expect_msb_to_be_sent_first()
 {
-  static const unsigned char *EXPECTED_ORDERS[][CHAR_COUNT_FOR_A_BIT] = {
-      EXPECTED_ORDERS_FOR_ONE,
-      EXPECTED_ORDERS_FOR_ONE,
-      EXPECTED_ORDERS_FOR_ONE,
-      EXPECTED_ORDERS_FOR_ZERO,
-      EXPECTED_ORDERS_FOR_ONE,
-      EXPECTED_ORDERS_FOR_ZERO,
-      EXPECTED_ORDERS_FOR_ZERO,
-      EXPECTED_ORDERS_FOR_ZERO};
+  static const uint8_t EXPECTED_ORDERS[CHAR_COUNT_FOR_A_BIT * 8] = {
+      'L', 'S', 'H', 'W', 'L', 'S',  // 1
+      'L', 'S', 'H', 'W', 'L', 'S',  // 1
+      'L', 'S', 'H', 'W', 'L', 'S',  // 1
+      'H', 'S', 'L', 'W', 'H', 'S',  // 0
+      'L', 'S', 'H', 'W', 'L', 'S',  // 1
+      'H', 'S', 'L', 'W', 'H', 'S',  // 0
+      'H', 'S', 'L', 'W', 'H', 'S',  // 0
+      'H', 'S', 'L', 'W', 'H', 'S'}; // 0
 
-  const unsigned char data[] = {0b01110001};
+  const uint8_t data[] = {0b01110001};
   oregon.sendData(data, 1);
-  TEST_ASSERT_EQUAL_CHAR_ARRAY(EXPECTED_ORDERS, testHal.radioOutput, 8 * CHAR_COUNT_FOR_A_BIT);
+  TEST_ASSERT_EQUAL_CHAR_ARRAY(EXPECTED_ORDERS, testHal.radioOutput, (8 * CHAR_COUNT_FOR_A_BIT));
 }
 
 int runtestByteMsbFirstTests(void)
