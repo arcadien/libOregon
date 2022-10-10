@@ -25,5 +25,35 @@ Based on an [available specification](../doc/OregonScientific-RF-Protocols.pdf) 
 ## 1. Bit encoding  (step3 and step4)
 Bit encoding is the smallest information to be send. To allow testing on native and cross environment, a system HAL shall be implemented. Tests and implementation will be written for native environment (step3) then embedded (step4).
 
-## 2. Byte encoding (step 5)
-Bytes are sent MSB first. It means byte `0b01110001` shall be sent as `11101000`.
+## 2. Byte encoding
+Bytes are sent MSB first. It means byte `0b01110001` shall be sent as `11101000`. Tests and implementation will be written for native environment (step5) then embedded (step6).
+
+---
+
+At this point, it seems clear that testing the library in the native environment, using `NativeHal` is quite easy. Testing the embedded environment, however, is not.
+
+The development environment looks like:
+
+```
+|----------|                    |-----------------------|
+| Dev host |--< Usb/Serial A >--| Arduino Mega (target) |
+| (native) |                    |      (embedded)       |
+|----------|     (prog)         |-----------------------|
+      |                                  /|\
+      ^                                   |
+      |                                   | GPIO
+      ^                                   | ( real life implies 433Mhz )
+      |                                   | ( emmiter and receiver     )
+      ^                                  \|/
+      |                         |------------------------|
+      |--<---< Usb/Serial B <---| Arduino Mega (decoder) |
+         (decoding feedback)    |------------------------|
+
+``` 
+_Note: Testing in __native__ environment allows to test the business part of the implementation, as well as the `Native` implementation of the target HAL. Testing in __embedded__ environment allows to test the business part of the implementation, and the `Arduino` implementation of target HAL._
+
+_HAL allows to implement support for other target hardware._
+
+Collecting data from `USB/Serial A` in PlatformIO is easy. It is not easily possible to flash the target and wait information from from `USB/Serial B`. More, serial output from the target decoder ([RFlink](https://www.rflink.nl/)) does not ressemble Unity output.
+
+Anyway, objective is to use Test Driven Development, and feedback from hardware part, meaning _testing the target hardware HAL_, is mandatory.
